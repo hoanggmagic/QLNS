@@ -12,3 +12,4 @@ public class AdminController {
         return "admin/index"; // Trả về trang admin/index.html
     }
 }
+    

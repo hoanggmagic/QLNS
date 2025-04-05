@@ -1,25 +1,32 @@
 package com.qlns.qlns.Serevice;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.qlns.qlns.Mode.Employee;
-import com.qlns.qlns.Repository.EmployeeRepository;
-
 import java.util.List;
+import java.util.Optional;
 
-@Service
-public class EmployeeService {
+public interface EmployeeService {
+    
+    // Tìm nhân viên theo ID
+    Employee findById(Long id);
+    
+    // Lưu nhân viên mới
+    void save(Employee employee);
+    
+    // Lấy tất cả nhân viên
+    List<Employee> findAll();
+    
+    // Xóa nhân viên theo ID
+    void deleteById(Long id);
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
-
-    public Employee saveEmployee(Employee employee) {
-        return employeeRepository.save(employee);
-    }
-
-    public List<Employee> getEmployeesByDepartment(String department) {
-        return employeeRepository.findByDepartment(department);
-    }
+    // Cập nhật thông tin nhân viên
+    void updateEmployee(Employee employee);
+    
+    // Tìm nhân viên theo tên
+    Optional<Employee> findByName(String name);
+    
+    // Tìm nhân viên theo email
+    Optional<Employee> findByEmail(String email);
+    
+    // Tìm nhân viên theo số điện thoại
+    Optional<Employee> findByPhone(String phone);
 }
-

@@ -1,11 +1,18 @@
 package com.qlns.qlns.Repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.qlns.qlns.Mode.Employee;
-
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Optional;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
-    List<Employee> findByDepartment(String department);
+    
+    // Phương thức tìm nhân viên theo tên
+    Optional<Employee> findByName(String name);
+    
+    // Phương thức xóa nhân viên theo ID
+    void deleteById(Long id);
+
+    // Thêm các phương thức tìm kiếm khác nếu cần
+    Optional<Employee> findByEmail(String email);
+    Optional<Employee> findByPhone(String phone);
 }
