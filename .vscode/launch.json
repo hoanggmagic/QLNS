@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-QlnsApplication<qlns>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.qlns.qlns.QlnsApplication",
+      "projectName": "qlns",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
