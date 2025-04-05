@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Chấm Công Nhân Viên</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f9;
+        margin: 0;
+        padding: 0;
+      }
+
+      .header {
+        background-color: #2c3e50;
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 30px;
+      }
+
+      table,
+      th,
+      td {
+        border: 1px solid #ddd;
+      }
+
+      th,
+      td {
+        padding: 10px;
+        text-align: center;
+      }
+
+      th {
+        background-color: #2c3e50;
+        color: white;
+      }
+
+      .form-container {
+        margin: 20px;
+      }
+
+      .form-container input {
+        padding: 10px;
+        margin: 5px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+      }
+
+      .form-container button {
+        padding: 10px 20px;
+        background-color: #2c3e50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+      }
+
+      .form-container button:hover {
+        background-color: #34495e;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>Chấm Công Nhân Viên</h1>
+    </div>
+
+    <!-- Form thêm mới chấm công -->
+    <div class="form-container">
+      <h2>Thêm Chấm Công</h2>
+      <form action="/admin/chamcong/add" method="post">
+        <label for="employeeId">ID Nhân Viên:</label>
+        <input type="text" name="employeeId" id="employeeId" required />
+
+        <label for="date">Ngày:</label>
+        <input type="date" name="date" id="date" required />
+
+        <label for="checkInTime">Giờ Vào:</label>
+        <input type="time" name="checkInTime" id="checkInTime" required />
+
+        <label for="checkOutTime">Giờ Ra:</label>
+        <input type="time" name="checkOutTime" id="checkOutTime" required />
+
+        <label for="isLate">Trễ:</label>
+        <input type="checkbox" name="isLate" id="isLate" />
+
+        <button type="submit">Lưu</button>
+      </form>
+    </div>
+
+    <!-- Bảng danh sách chấm công -->
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>ID Nhân Viên</th>
+          <th>Ngày</th>
+          <th>Giờ Vào</th>
+          <th>Giờ Ra</th>
+          <th>Trễ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="attendance : ${attendances}">
+          <td th:text="${attendance.id}"></td>
+          <td th:text="${attendance.employeeId}"></td>
+          <td th:text="${attendance.date}"></td>
+          <td th:text="${attendance.checkInTime}"></td>
+          <td th:text="${attendance.checkOutTime}"></td>
+          <td th:text="${attendance.isLate ? 'Có' : 'Không'}"></td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

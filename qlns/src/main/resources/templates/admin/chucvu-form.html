@@ -2,7 +2,7 @@
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
-    <title>Trang Quản Trị Admin - Thêm/Sửa Nhân Viên</title>
+    <title>Thêm/Sửa Chức Vụ</title>
     <style>
       /* Style cho form */
       body {
@@ -31,7 +31,6 @@
       }
 
       .form-container input,
-      .form-container select,
       .form-container button {
         width: 100%;
         padding: 10px;
@@ -62,66 +61,33 @@
       }
     </style>
   </head>
-
   <body>
     <div class="admin-header">
       <a href="javascript:void(0);" onclick="goTo('dashboard')"
         ><h1>Bảng Điều Khiển Admin</h1></a
       >
+
+      <button class="logout-btn" onclick="logout()">Đăng xuất</button>
     </div>
 
     <div class="container">
-      <h2 class="text-center mb-4">Thêm/Sửa Nhân Viên</h2>
+      <h2 class="text-center mb-4">Thêm/Sửa Chức Vụ</h2>
 
       <div class="form-container">
-        <!-- Form Thêm/Sửa Nhân Viên -->
+        <!-- Form Thêm/Sửa Chức Vụ -->
         <form
-          th:action="@{${employee.id} == null ? '/admin/nhansu/add' : '/admin/nhansu/edit/' + ${employee.id}}"
-          th:object="${employee}"
+          th:action="@{${position.id} == null ? '/admin/chucvu/add' : '/admin/chucvu/edit/' + ${position.id}}"
+          th:object="${position}"
           method="POST"
         >
-          <!-- Tên Nhân Viên -->
           <input
             type="text"
             th:field="*{name}"
-            placeholder="Tên Nhân Viên"
+            placeholder="Tên Chức Vụ"
             required
           />
 
-          <!-- Phòng Ban -->
-          <input
-            type="text"
-            th:field="*{department}"
-            placeholder="Phòng Ban"
-            required
-          />
-
-          <!-- Chức Vụ -->
-          <input
-            type="text"
-            th:field="*{position}"
-            placeholder="Chức Vụ"
-            required
-          />
-
-          <!-- Email -->
-          <input
-            type="email"
-            th:field="*{email}"
-            placeholder="Email"
-            required
-          />
-
-          <!-- Điện Thoại -->
-          <input
-            type="text"
-            th:field="*{phone}"
-            placeholder="Điện Thoại"
-            required
-          />
-
-          <!-- Nút Lưu Nhân Viên -->
-          <button type="submit">Lưu Nhân Viên</button>
+          <button type="submit">Lưu Chức Vụ</button>
         </form>
       </div>
     </div>

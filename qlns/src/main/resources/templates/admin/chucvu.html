@@ -2,8 +2,9 @@
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
-    <title>Trang Quản Trị Admin - Danh Sách Nhân Viên</title>
+    <title>Trang Quản Trị Admin - Chức Vụ</title>
     <style>
+      /* Style cho trang */
       body {
         font-family: Arial, sans-serif;
         background-color: #f4f6f9;
@@ -17,22 +18,6 @@
         padding: 20px;
         text-align: center;
         position: relative;
-      }
-
-      .logout-btn {
-        position: absolute;
-        right: 20px;
-        top: 20px;
-        background-color: #e74c3c;
-        color: white;
-        border: none;
-        padding: 10px 16px;
-        border-radius: 6px;
-        cursor: pointer;
-      }
-
-      .logout-btn:hover {
-        background-color: #c0392b;
       }
 
       table {
@@ -58,23 +43,27 @@
         color: white;
       }
 
-      .error {
-        color: red;
-        margin-top: 20px;
-        text-align: center;
-      }
-
-      .add-btn {
-        background-color: #2ecc71;
+      .btn {
+        padding: 8px 12px;
         color: white;
-        padding: 10px 20px;
-        border: none;
+        text-decoration: none;
         border-radius: 6px;
-        cursor: pointer;
       }
 
-      .add-btn:hover {
+      .btn-add {
         background-color: #27ae60;
+      }
+
+      .btn-edit {
+        background-color: #f39c12;
+      }
+
+      .btn-delete {
+        background-color: #e74c3c;
+      }
+
+      .btn:hover {
+        opacity: 0.8;
       }
       .admin-header a {
         text-decoration: none;
@@ -85,7 +74,6 @@
       }
     </style>
   </head>
-
   <body>
     <div class="admin-header">
       <a href="javascript:void(0);" onclick="goTo('dashboard')"
@@ -96,55 +84,39 @@
     </div>
 
     <div class="container">
-      <h2 class="text-center mb-4">Danh Sách Nhân Viên</h2>
+      <h2 class="text-center mb-4">Danh Sách Chức Vụ</h2>
 
-      <!-- Nút Thêm Nhân Viên -->
-      <a href="/admin/nhansu/add" class="add-btn">Thêm Nhân Viên</a>
+      <a href="/admin/chucvu/add" class="btn btn-add">Thêm Chức Vụ</a>
 
       <table>
         <thead>
           <tr>
             <th>ID</th>
-            <th>Tên Nhân Viên</th>
-            <th>Phòng Ban</th>
-            <th>Chức Vụ</th>
-            <th>Email</th>
-            <th>Điện Thoại</th>
+            <th>Tên Chức Vụ</th>
             <th>Hành Động</th>
           </tr>
         </thead>
         <tbody>
-          <tr th:each="employee : ${employees}">
-            <td th:text="${employee.id}"></td>
-            <td th:text="${employee.name}"></td>
-            <td th:text="${employee.department}"></td>
-            <td th:text="${employee.position}"></td>
-            <td th:text="${employee.email}"></td>
-            <td th:text="${employee.phone}"></td>
+          <tr th:each="position : ${positions}">
+            <td th:text="${position.id}"></td>
+            <td th:text="${position.name}"></td>
             <td>
-              <!-- Liên kết Chỉnh sửa -->
               <a
-                th:href="@{/admin/nhansu/edit/{id}(id=${employee.id})}"
-                class="btn btn-warning btn-sm"
-                >Chỉnh sửa</a
+                th:href="@{/admin/chucvu/edit/{id}(id=${position.id})}"
+                class="btn btn-edit"
+                >Chỉnh Sửa</a
               >
-              <!-- Liên kết Xóa -->
               <a
-                th:href="@{/admin/nhansu/delete/{id}(id=${employee.id})}"
-                class="btn btn-danger btn-sm"
-                onclick="return confirm('Bạn có chắc chắn muốn xóa nhân viên này?')"
+                th:href="@{/admin/chucvu/delete/{id}(id=${position.id})}"
+                class="btn btn-delete"
+                onclick="return confirm('Bạn có chắc chắn muốn xóa chức vụ này?')"
                 >Xóa</a
               >
             </td>
           </tr>
         </tbody>
       </table>
-
-      <div th:if="${error != null}" class="error">
-        <p th:text="${error}"></p>
-      </div>
     </div>
-
     <script>
       function goTo(page) {
         alert("Chuyển đến trang: " + page);

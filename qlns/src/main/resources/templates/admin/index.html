@@ -75,11 +75,21 @@
       .admin-card button:hover {
         background-color: #2980b9;
       }
+      .admin-header a {
+        text-decoration: none;
+      }
+
+      .admin-header h1 {
+        color: white;
+      }
     </style>
   </head>
   <body>
     <div class="admin-header">
-      <h1>Bảng Điều Khiển Admin</h1>
+      <a href="javascript:void(0);" onclick="goTo('dashboard')"
+        ><h1>Bảng Điều Khiển Admin</h1></a
+      >
+
       <button class="logout-btn" onclick="logout()">Đăng xuất</button>
     </div>
 
