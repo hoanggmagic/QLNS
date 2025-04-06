@@ -115,21 +115,18 @@
           placeholder="Tên đăng nhập"
           required
         />
-
         <input
           type="password"
           name="password"
           placeholder="Mật khẩu"
           required
         />
-
-        <!-- Chọn vai trò người dùng -->
-        <select name="role" required>
-          <option value="admin">Admin</option>
-          <option value="user">Người dùng</option>
-        </select>
-
         <button type="submit">Đăng nhập</button>
+
+        <!-- Hiển thị lỗi nếu có -->
+        <div th:if="${error != null}" class="error-message">
+          <p th:text="${error}"></p>
+        </div>
       </form>
 
       <!-- Hiển thị lỗi nếu có -->

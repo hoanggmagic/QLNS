@@ -9,4 +9,7 @@ public interface NhanVienService {
     NhanVien save(NhanVien nhanVien);
     NhanVien update(Long id, NhanVien nhanVien);
     void delete(Long id);
+    NhanVien findByUsername(String username);
+    NhanVien findByEmail(String email);
+
 }

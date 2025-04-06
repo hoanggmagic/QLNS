@@ -1,5 +1,7 @@
 package com.qlns.qlns.Serevice;
+
 import com.qlns.qlns.Mode.ChamCong;
+import com.qlns.qlns.Mode.NhanVien;
 import com.qlns.qlns.Repository.ChamCongRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,18 @@ public class ChamCongServiceImpl implements ChamCongService {
     @Override
     public void save(ChamCong chamCong) {
         repository.save(chamCong);
+    }
+
+    // ✅ Thêm để dùng trong controller
+    @Override
+    public ChamCong saveChamCong(ChamCong chamCong) {
+        return repository.save(chamCong);
+    }
+
+    // ✅ Thêm để lấy danh sách chấm công theo nhân viên
+    @Override
+    public List<ChamCong> findByNhanVien(NhanVien nhanVien) {
+        return repository.findByNhanVien(nhanVien);
     }
 
     @Override

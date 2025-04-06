@@ -1,48 +1,57 @@
 package com.qlns.qlns.Controller;
 
 import com.qlns.qlns.Mode.NhanVien;
+import com.qlns.qlns.Serevice.LoginService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/login")
 public class LoginController {
 
     @Autowired
-    private com.qlns.qlns.Serevice.LoginService loginService;
+    private LoginService loginService;
 
-    // Trang login
+    // 👉 Hiển thị trang đăng nhập
     @GetMapping
     public String loginPage() {
-        return "login";  // Trang đăng nhập
+        return "login";
     }
 
-    // Xử lý đăng nhập
+    // 👉 Xử lý đăng nhập
     @PostMapping
     public String login(@RequestParam("username") String username,
                         @RequestParam("password") String password,
-                        Model model) {
+                        Model model,
+                        HttpSession session) {
 
-        // Kiểm tra thông tin đăng nhập
         NhanVien nhanVien = loginService.authenticate(username, password);
 
         if (nhanVien == null) {
-            model.addAttribute("error", "Sai thông tin đăng nhập!");
-            return "login";  // Trả lại trang đăng nhập với lỗi
+            model.addAttribute("error", "Sai tên đăng nhập hoặc mật khẩu.");
+            return "login";
         }
 
-        // Kiểm tra chức vụ của nhân viên
-        String role = nhanVien.getChucVu().getName();  // Lấy tên chức vụ của nhân viên
+        // ✅ Lưu thông tin nhân viên vào session
+        session.setAttribute("loggedInUser", nhanVien);
 
-        if ("Admin".equals(role)) {
-            return "redirect:/user/dashboard";  // Chuyển hướng đến trang Admin
+        // ✅ Điều hướng theo vai trò
+        String role = nhanVien.getChucVu().getName().toLowerCase();
+
+        if ("admin".equals(role)) {
+            return "redirect:/admin/dashboard";
         } else {
-            return "redirect:/admin/dashboard";  // Chuyển hướng đến trang Nhân viên
+            return "redirect:/user/dashboard";
         }
+    }
+
+    // 👉 Xử lý đăng xuất
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate(); // xoá session
+        return "redirect:/login";
     }
 }
