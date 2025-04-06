@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "cham_cong") // Chuẩn hóa tên bảng nếu DB đang dùng snake_case
+@Table(name = "cham_cong")
 public class ChamCong {
 
     @Id
