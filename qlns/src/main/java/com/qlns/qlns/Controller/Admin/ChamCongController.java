@@ -1,34 +1,26 @@
 package com.qlns.qlns.Controller.Admin;
 
 import com.qlns.qlns.Mode.ChamCong;
-import com.qlns.qlns.Repository.ChamCongRepository;
+import com.qlns.qlns.Serevice.ChamCongService;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/admin/chamcong")
 public class ChamCongController {
 
     @Autowired
-    private ChamCongRepository chamCongRepository;
+    private ChamCongService chamCongService;
 
-    // Hiển thị danh sách chấm công
     @GetMapping
-    public String viewChamCong(Model model) {
-        model.addAttribute("chamCongs", chamCongRepository.findAll()); // Lấy tất cả chấm công từ cơ sở dữ liệu
-        return "admin/chamcong"; // Trả về trang chamcong.html
+    public String listChamCong(Model model) {
+        List<ChamCong> list = chamCongService.findAll();
+        model.addAttribute("listChamCong", list);
+        return "admin/chamcong";
     }
-
-    // Thêm mới chấm công
-    @PostMapping("/add")
-    public String addChamCong(ChamCong chamCong) {
-        chamCongRepository.save(chamCong); // Lưu chấm công vào cơ sở dữ liệu
-        return "redirect:/admin/chamcong"; // Chuyển hướng lại trang danh sách chấm công
-    }
-
-    // Có thể thêm một phương thức sửa chấm công nếu cần (ví dụ sửa thông tin giờ làm)
 }

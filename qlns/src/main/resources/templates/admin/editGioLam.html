@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
-    <meta charset="UTF-8" />
     <title>Chỉnh sửa giờ làm</title>
   </head>
   <body>
     <h1>Chỉnh sửa giờ làm</h1>
-    <form action="#" th:action="@{/admin/giolam/update}" method="post">
-      <!-- Ẩn ID của giờ làm hiện tại -->
+
+    <form
+      th:action="@{/admin/giolam/update}"
+      th:object="${gioLam}"
+      method="post"
+    >
       <input type="hidden" th:field="*{id}" />
 
       <label for="gioBatDau">Giờ bắt đầu:</label>
@@ -16,8 +19,8 @@
       <label for="gioKetThuc">Giờ kết thúc:</label>
       <input type="time" th:field="*{gioKetThuc}" required /><br />
 
-      <label for="nhanVienId">Nhân viên:</label>
-      <select id="nhanVienId" name="nhanVienId" required>
+      <label for="nhanVien">Nhân viên:</label>
+      <select th:field="*{nhanVien.id}" required>
         <option
           th:each="nv : ${nhanViens}"
           th:value="${nv.id}"

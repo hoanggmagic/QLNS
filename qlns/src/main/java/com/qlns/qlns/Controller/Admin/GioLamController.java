@@ -5,12 +5,11 @@ import com.qlns.qlns.Mode.NhanVien;
 import com.qlns.qlns.Serevice.GioLamService;
 import com.qlns.qlns.Serevice.NhanVienService;
 
+import java.time.LocalTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalTime;
 
 @Controller
 @RequestMapping("/admin/giolam")
@@ -31,11 +30,11 @@ public class GioLamController {
 
     // Hiển thị form thêm giờ làm
     @GetMapping("/add")
-    public String showAddForm(Model model) {
-        model.addAttribute("gioLam", new GioLam());
-        model.addAttribute("nhanViens", nhanVienService.findAll());
-        return "admin/addGioLam";
-    }
+public String showAddForm(Model model) {
+    model.addAttribute("gioLam", new GioLam());
+    model.addAttribute("nhanViens", nhanVienService.findAll()); // Bắt buộc phải có dòng này
+    return "admin/addGioLam";
+}
 
     // Xử lý thêm giờ làm
     @PostMapping("/add")
@@ -43,74 +42,39 @@ public class GioLamController {
                             @RequestParam("gioKetThuc") String gioKetThucStr,
                             @RequestParam("nhanVienId") Long nhanVienId) {
 
-        // Kiểm tra xem nhân viên có tồn tại không
+        LocalTime gioBatDau = LocalTime.parse(gioBatDauStr);
+        LocalTime gioKetThuc = LocalTime.parse(gioKetThucStr);
         NhanVien nhanVien = nhanVienService.findById(nhanVienId);
-        if (nhanVien == null) {
-            // Xử lý lỗi: Nhân viên không tồn tại
-            return "redirect:/admin/giolam?error=nhanVienNotFound";
-        }
 
-        try {
-            LocalTime gioBatDau = LocalTime.parse(gioBatDauStr);
-            LocalTime gioKetThuc = LocalTime.parse(gioKetThucStr);
-            
-            GioLam gioLam = new GioLam();
-            gioLam.setGioBatDau(gioBatDau);
-            gioLam.setGioKetThuc(gioKetThuc);
-            gioLam.setNhanVien(nhanVien);
+        GioLam gioLam = new GioLam();
+        gioLam.setGioBatDau(gioBatDau);
+        gioLam.setGioKetThuc(gioKetThuc);
+        gioLam.setNhanVien(nhanVien);
 
-            gioLamService.save(gioLam);
-        } catch (Exception e) {
-            // Xử lý lỗi khi không thể phân tích giờ làm
-            return "redirect:/admin/giolam?error=invalidTimeFormat";
-        }
+        gioLamService.save(gioLam);
         return "redirect:/admin/giolam";
     }
 
     // Hiển thị form chỉnh sửa
     @GetMapping("/edit")
-    public String showEditForm(@RequestParam("id") Long id, Model model) {
+    public String editGioLam(@RequestParam("id") Long id, Model model) {
         GioLam gioLam = gioLamService.findById(id);
-        if (gioLam == null) {
-            return "redirect:/admin/giolam?error=gioLamNotFound";  // Điều hướng về trang giolam nếu không tìm thấy gioLam
-        }
         model.addAttribute("gioLam", gioLam);
         model.addAttribute("nhanViens", nhanVienService.findAll());
         return "admin/editGioLam";
     }
 
-    // Xử lý cập nhật giờ làm
+    // Xử lý cập nhật
     @PostMapping("/update")
-    public String updateGioLam(@RequestParam("id") Long id,
-                               @RequestParam("gioBatDau") String gioBatDauStr,
-                               @RequestParam("gioKetThuc") String gioKetThucStr,
-                               @RequestParam("nhanVienId") Long nhanVienId) {
+public String updateGioLam(@ModelAttribute("gioLam") GioLam gioLam) {
+    // Lấy lại đối tượng nhân viên vì chỉ có id được binding
+    NhanVien nhanVien = nhanVienService.findById(gioLam.getNhanVien().getId());
+    gioLam.setNhanVien(nhanVien);
 
-        GioLam gioLam = gioLamService.findById(id);
-        if (gioLam == null) {
-            // Xử lý lỗi: Giờ làm không tồn tại
-            return "redirect:/admin/giolam?error=gioLamNotFound";
-        }
+    gioLamService.save(gioLam);
+    return "redirect:/admin/giolam";
+}
 
-        // Kiểm tra xem nhân viên có tồn tại không
-        NhanVien nhanVien = nhanVienService.findById(nhanVienId);
-        if (nhanVien == null) {
-            // Xử lý lỗi: Nhân viên không tồn tại
-            return "redirect:/admin/giolam?error=nhanVienNotFound";
-        }
-
-        try {
-            gioLam.setGioBatDau(LocalTime.parse(gioBatDauStr));
-            gioLam.setGioKetThuc(LocalTime.parse(gioKetThucStr));
-            gioLam.setNhanVien(nhanVien);
-            gioLamService.save(gioLam);
-        } catch (Exception e) {
-            // Xử lý lỗi khi không thể phân tích giờ làm
-            return "redirect:/admin/giolam?error=invalidTimeFormat";
-        }
-
-        return "redirect:/admin/giolam";
-    }
 
     // Xóa giờ làm
     @GetMapping("/delete")
