@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <title>Trang Quản Trị Admin - Giờ Làm Việc</title>
@@ -16,7 +16,10 @@
         color: #fff;
         padding: 20px;
         text-align: center;
-        position: relative;
+      }
+
+      .container {
+        padding: 20px;
       }
 
       table {
@@ -81,25 +84,31 @@
           <tr>
             <th>ID</th>
             <th>ID Nhân Viên</th>
-            <th>Ngày</th>
-            <th>Số Giờ Làm</th>
+            <th>Giờ Làm</th>
             <th>Hành Động</th>
           </tr>
         </thead>
         <tbody>
-          <tr th:each="workHours : ${workHoursList}">
-            <td th:text="${workHours.id}"></td>
-            <td th:text="${workHours.employeeId}"></td>
-            <td th:text="${workHours.date}"></td>
-            <td th:text="${workHours.hoursWorked}"></td>
+          <tr th:each="gioLam : ${gioLams}">
+            <td th:text="${gioLam.id}">1</td>
+            <td
+              th:text="${gioLam.nhanVien != null ? gioLam.nhanVien.id : '---'}"
+            >
+              NV001
+            </td>
+            <td
+              th:text="${#temporals.format(gioLam.gioBatDau, 'HH:mm') + ' - ' + #temporals.format(gioLam.gioKetThuc, 'HH:mm')}"
+            >
+              08:00 - 17:00
+            </td>
             <td>
               <a
-                th:href="@{/admin/giolam/edit/{id}(id=${workHours.id})}"
+                th:href="@{/admin/giolam/edit(id=${gioLam.id})}"
                 class="btn btn-edit"
                 >Chỉnh Sửa</a
               >
               <a
-                th:href="@{/admin/giolam/delete/{id}(id=${workHours.id})}"
+                th:href="@{/admin/giolam/delete(id=${gioLam.id})}"
                 class="btn btn-delete"
                 onclick="return confirm('Bạn có chắc chắn muốn xóa giờ làm việc này?')"
                 >Xóa</a

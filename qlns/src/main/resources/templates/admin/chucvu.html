@@ -117,16 +117,15 @@
         </tbody>
       </table>
     </div>
+
     <script>
       function goTo(page) {
-        alert("Chuyển đến trang: " + page);
-        window.location.href = "/admin/" + page; // Redirect to the corresponding page
+        window.location.href = "/admin/" + page; // Chuyển trang
       }
+
       function logout() {
-        alert("Đăng xuất khỏi hệ thống");
-        window.location.href = "/logout"; // Redirect to logout
+        window.location.href = "/logout"; // Đăng xuất
       }
     </script>
-    <div th:replace="~{layout/footer.html}"></div>
   </body>
 </html>

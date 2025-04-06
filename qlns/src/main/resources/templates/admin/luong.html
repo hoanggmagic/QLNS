@@ -1,114 +1,76 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
   <head>
     <meta charset="UTF-8" />
-    <title>Quản lý Lương</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f6f9;
-        margin: 0;
-        padding: 0;
-      }
-      .header {
-        background-color: #2c3e50;
-        color: #fff;
-        padding: 20px;
-        text-align: center;
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-      }
-      table,
-      th,
-      td {
-        border: 1px solid #ddd;
-      }
-      th,
-      td {
-        padding: 10px;
-        text-align: center;
-      }
-      th {
-        background-color: #2c3e50;
-        color: white;
-      }
-      .form-container {
-        margin: 20px 0;
-      }
-    </style>
+    <title>Quản Lý Lương</title>
   </head>
   <body>
-    <div class="header">
-      <h1>Quản lý Lương Nhân Viên</h1>
-    </div>
+    <h1>Danh Sách Lương Nhân Viên</h1>
 
-    <!-- Form thêm mới lương -->
-    <div class="form-container">
-      <h2>Thêm Mới Lương</h2>
-      <form action="/admin/luong/add" method="post">
-        <label for="employeeId">Mã Nhân Viên:</label>
+    <!-- Form Thêm Lương -->
+    <form th:action="@{/admin/luong/add}" method="post" th:object="${luong}">
+      <label
+        >Nhân viên:
+        <select th:field="*{nhanVien.id}" required>
+          <option value="">-- Chọn nhân viên --</option>
+          <option
+            th:each="nv : ${nhanViens}"
+            th:value="${nv.id}"
+            th:text="${nv.username}"
+          ></option>
+        </select> </label
+      ><br />
+
+      <label
+        >Lương cơ bản:
         <input
           type="number"
-          id="employeeId"
-          name="employeeId"
-          required
-        /><br /><br />
-
-        <label for="baseSalary">Lương Cơ Bản:</label>
-        <input
-          type="number"
-          id="baseSalary"
-          name="baseSalary"
+          th:field="*{luongCoBan}"
           step="0.01"
           required
-        /><br /><br />
+        /> </label
+      ><br />
 
-        <label for="bonus">Thưởng:</label>
+      <label
+        >Phụ cấp:
         <input
           type="number"
-          id="bonus"
-          name="bonus"
+          th:field="*{phuCap}"
           step="0.01"
           required
-        /><br /><br />
+        /> </label
+      ><br />
 
-        <label for="deductions">Khấu Trừ:</label>
-        <input
-          type="number"
-          id="deductions"
-          name="deductions"
-          step="0.01"
-          required
-        /><br /><br />
+      <button type="submit">Thêm lương</button>
+    </form>
 
-        <button type="submit">Thêm Lương</button>
-      </form>
-    </div>
-
-    <!-- Bảng danh sách lương -->
-    <h2>Danh Sách Lương</h2>
-    <table>
+    <!-- Danh sách lương -->
+    <table border="1">
       <thead>
         <tr>
           <th>ID</th>
-          <th>Mã Nhân Viên</th>
-          <th>Lương Cơ Bản</th>
-          <th>Thưởng</th>
-          <th>Khấu Trừ</th>
-          <th>Tổng Lương</th>
+          <th>Nhân viên</th>
+          <th>Lương cơ bản</th>
+          <th>Phụ cấp</th>
+          <th>Tổng lương</th>
+          <th>Hành động</th>
         </tr>
       </thead>
       <tbody>
-        <tr th:each="salary : ${salaries}">
-          <td th:text="${salary.id}"></td>
-          <td th:text="${salary.employeeId}"></td>
-          <td th:text="${salary.baseSalary}"></td>
-          <td th:text="${salary.bonus}"></td>
-          <td th:text="${salary.deductions}"></td>
-          <td th:text="${salary.totalSalary}"></td>
+        <tr th:each="luong : ${luongs}">
+          <td th:text="${luong.id}"></td>
+          <td th:text="${luong.nhanVien.username}"></td>
+          <td th:text="${luong.luongCoBan}"></td>
+          <td th:text="${luong.phuCap}"></td>
+          <td th:text="${luong.tongLuong}"></td>
+          <td>
+            <a th:href="@{/admin/luong/edit/{id}(id=${luong.id})}">Sửa</a> |
+            <a
+              th:href="@{/admin/luong/delete/{id}(id=${luong.id})}"
+              onclick="return confirm('Xác nhận xóa?')"
+              >Xóa</a
+            >
+          </td>
         </tr>
       </tbody>
     </table>

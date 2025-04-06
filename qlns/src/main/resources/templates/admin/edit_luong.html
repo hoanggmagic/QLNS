@@ -1,0 +1,34 @@
+<!-- File: src/main/resources/templates/admin/edit_luong.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Chỉnh sửa Lương</title>
+  </head>
+  <body>
+    <h1>Chỉnh sửa Lương</h1>
+
+    <form th:action="@{/admin/luong/update}" method="post" th:object="${luong}">
+      <input type="hidden" th:field="*{id}" />
+      <input type="hidden" th:field="*{nhanVien.id}" />
+
+      <label>Lương cơ bản:</label>
+      <input
+        type="number"
+        step="0.01"
+        th:field="*{luongCoBan}"
+        required
+      /><br />
+
+      <label>Phụ cấp:</label>
+      <input type="number" step="0.01" th:field="*{phuCap}" required /><br />
+
+      <label>Tổng lương:</label>
+      <input type="number" step="0.01" th:field="*{tongLuong}" readonly /><br />
+
+      <button type="submit">Cập nhật</button>
+    </form>
+
+    <a href="/admin/luong">⬅ Quay lại</a>
+  </body>
+</html>

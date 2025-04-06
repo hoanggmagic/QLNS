@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Chỉnh sửa giờ làm</title>
+  </head>
+  <body>
+    <h1>Chỉnh sửa giờ làm</h1>
+    <form action="#" th:action="@{/admin/giolam/update}" method="post">
+      <!-- Ẩn ID của giờ làm hiện tại -->
+      <input type="hidden" th:field="*{id}" />
+
+      <label for="gioBatDau">Giờ bắt đầu:</label>
+      <input type="time" th:field="*{gioBatDau}" required /><br />
+
+      <label for="gioKetThuc">Giờ kết thúc:</label>
+      <input type="time" th:field="*{gioKetThuc}" required /><br />
+
+      <label for="nhanVienId">Nhân viên:</label>
+      <select id="nhanVienId" name="nhanVienId" required>
+        <option
+          th:each="nv : ${nhanViens}"
+          th:value="${nv.id}"
+          th:text="${nv.username}"
+        ></option></select
+      ><br /><br />
+
+      <button type="submit">Cập nhật</button>
+    </form>
+  </body>
+</html>

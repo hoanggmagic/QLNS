@@ -21,7 +21,6 @@
         color: #333;
       }
 
-      /* Form đăng nhập */
       .login-container {
         background: white;
         padding: 30px;
@@ -29,7 +28,7 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         width: 100%;
         max-width: 400px;
-        margin: 100px auto; /* Căn giữa form */
+        margin: 100px auto;
         transition: transform 0.3s ease-in-out;
       }
 
@@ -95,7 +94,6 @@
         text-align: center;
       }
 
-      /* Footer */
       footer {
         text-align: center;
         font-size: 14px;
@@ -108,53 +106,42 @@
     <div th:replace="~{layout/header.html}"></div>
     <div class="login-container">
       <h2>Đăng nhập</h2>
-      <input type="text" id="username" placeholder="Tên đăng nhập" required />
-      <input type="password" id="password" placeholder="Mật khẩu" required />
 
-      <!-- Thêm phần chọn vai trò (role) -->
-      <select id="role" required>
-        <option value="admin">Admin</option>
-        <option value="user">Người dùng</option>
-      </select>
+      <!-- Form đăng nhập sử dụng POST đến /login -->
+      <form th:action="@{/login}" method="post">
+        <input
+          type="text"
+          name="username"
+          placeholder="Tên đăng nhập"
+          required
+        />
 
-      <button onclick="login()">Đăng nhập</button>
+        <input
+          type="password"
+          name="password"
+          placeholder="Mật khẩu"
+          required
+        />
+
+        <!-- Chọn vai trò người dùng -->
+        <select name="role" required>
+          <option value="admin">Admin</option>
+          <option value="user">Người dùng</option>
+        </select>
+
+        <button type="submit">Đăng nhập</button>
+      </form>
+
+      <!-- Hiển thị lỗi nếu có -->
+      <div th:if="${error != null}" class="error-message">
+        <p th:text="${error}"></p>
+      </div>
     </div>
 
     <script>
-      function login() {
-        const role = document.getElementById("role").value;
-        const username = document.getElementById("username").value;
-        const password = document.getElementById("password").value;
-
-        // Kiểm tra nếu có tên người dùng và mật khẩu
-        if (username && password) {
-          // Sử dụng POST tới endpoint /login thay vì xử lý trên frontend
-          fetch("/login", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-            body: `username=${username}&password=${password}&role=${role}`,
-          })
-            .then((response) => {
-              if (response.ok) {
-                if (role === "admin") {
-                  window.location.href = "/admin/dashboard"; // Admin trang dashboard
-                } else {
-                  window.location.href = "/user/dashboard"; // Người dùng trang dashboard
-                }
-              } else {
-                alert("Đăng nhập thất bại, vui lòng kiểm tra lại!");
-              }
-            })
-            .catch((error) => {
-              alert("Lỗi kết nối!");
-            });
-        } else {
-          alert("Vui lòng nhập đầy đủ thông tin!");
-        }
-      }
+      // Nếu muốn thêm JavaScript xử lý login trực tiếp ở frontend, có thể thay thế logic ở đây.
     </script>
+
     <div th:replace="~{layout/footer.html}"></div>
   </body>
 </html>
