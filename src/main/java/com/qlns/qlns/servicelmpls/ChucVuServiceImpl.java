@@ -1,7 +1,9 @@
-package com.qlns.qlns.serevicelmpls;
+package com.qlns.qlns.servicelmpls;
 
 import com.qlns.qlns.entitys.*;
 import com.qlns.qlns.repositorys.*;
+import com.qlns.qlns.services.ChucVuService;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;

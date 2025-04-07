@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Chấm công</title>
+  </head>
+  <body>
+    <h1>📝 Chấm Công</h1>
+
+    <form
+      th:action="@{/user/chamcong/save}"
+      method="post"
+      th:object="${chamCong}"
+    >
+      <label>
+        Ngày làm:
+        <input type="date" th:field="*{ngay}" required />
+      </label>
+
+      <label>
+        Giờ vào:
+        <input type="time" th:field="*{gioVao}" required />
+      </label>
+
+      <label>
+        Giờ ra:
+        <input type="time" th:field="*{gioRa}" required />
+      </label>
+
+      <button type="submit">Chấm công</button>
+    </form>
+  </body>
+</html>

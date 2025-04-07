@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Trang Quản Trị Admin - Chức Vụ</title>
+    <style>
+      /* Style cho trang */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f9;
+        margin: 0;
+        padding: 0;
+      }
+
+      .admin-header {
+        background-color: #2c3e50;
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+        position: relative;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 30px;
+      }
+
+      table,
+      th,
+      td {
+        border: 1px solid #ddd;
+      }
+
+      th,
+      td {
+        padding: 10px;
+        text-align: center;
+      }
+
+      th {
+        background-color: #2c3e50;
+        color: white;
+      }
+
+      .btn {
+        padding: 8px 12px;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+      }
+
+      .btn-add {
+        background-color: #27ae60;
+      }
+
+      .btn-edit {
+        background-color: #f39c12;
+      }
+
+      .btn-delete {
+        background-color: #e74c3c;
+      }
+
+      .btn:hover {
+        opacity: 0.8;
+      }
+      .admin-header a {
+        text-decoration: none;
+      }
+
+      .admin-header h1 {
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="admin-header">
+      <a href="javascript:void(0);" onclick="goTo('dashboard')"
+        ><h1>Bảng Điều Khiển Admin</h1></a
+      >
+
+      <button class="logout-btn" onclick="logout()">Đăng xuất</button>
+    </div>
+
+    <div class="container">
+      <h2 class="text-center mb-4">Danh Sách Chức Vụ</h2>
+
+      <a href="/admin/chucvu/add" class="btn btn-add">Thêm Chức Vụ</a>
+
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Tên Chức Vụ</th>
+            <th>Hành Động</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="position : ${positions}">
+            <td th:text="${position.id}"></td>
+            <td th:text="${position.name}"></td>
+            <td>
+              <a
+                th:href="@{/admin/chucvu/edit/{id}(id=${position.id})}"
+                class="btn btn-edit"
+                >Chỉnh Sửa</a
+              >
+              <a
+                th:href="@{/admin/chucvu/delete/{id}(id=${position.id})}"
+                class="btn btn-delete"
+                onclick="return confirm('Bạn có chắc chắn muốn xóa chức vụ này?')"
+                >Xóa</a
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      function goTo(page) {
+        window.location.href = "/admin/" + page; // Chuyển trang
+      }
+
+      function logout() {
+        window.location.href = "/logout"; // Đăng xuất
+      }
+    </script>
+  </body>
+</html>

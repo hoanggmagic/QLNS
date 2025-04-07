@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Thêm/Sửa Chức Vụ</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f9;
+        margin: 0;
+        padding: 0;
+      }
+
+      .admin-header {
+        background-color: #2c3e50;
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+      }
+
+      .form-container {
+        background-color: #fff;
+        padding: 20px;
+        margin-top: 30px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: auto;
+      }
+
+      .form-container input,
+      .form-container button {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 6px;
+        border: 1px solid #ddd;
+      }
+
+      .form-container button {
+        background-color: #2c3e50;
+        color: white;
+        cursor: pointer;
+      }
+
+      .form-container button:hover {
+        background-color: #34495e;
+      }
+
+      .form-container h2 {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="admin-header">
+      <a href="javascript:void(0);" onclick="goTo('dashboard')"
+        ><h1>Bảng Điều Khiển Admin</h1></a
+      >
+
+      <button class="logout-btn" onclick="logout()">Đăng xuất</button>
+    </div>
+
+    <div class="container">
+      <h2 class="text-center mb-4">Thêm/Sửa Chức Vụ</h2>
+
+      <div class="form-container">
+        <!-- Form Thêm/Sửa Chức Vụ -->
+        <form
+          th:action="@{${position.id} == null ? '/admin/chucvu/add' : '/admin/chucvu/edit/' + ${position.id}}"
+          th:object="${position}"
+          method="POST"
+        >
+          <input
+            type="text"
+            th:field="*{name}"
+            placeholder="Tên Chức Vụ"
+            required
+          />
+          <button type="submit">Lưu Chức Vụ</button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      function goTo(page) {
+        window.location.href = "/admin/" + page;
+      }
+
+      function logout() {
+        window.location.href = "/logout"; // Đăng xuất
+      }
+    </script>
+  </body>
+</html>

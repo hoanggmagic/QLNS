@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Sửa Nhân Viên</title>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <h1>Chỉnh Sửa Nhân Viên</h1>
+
+    <form
+      th:action="@{/admin/nhansu/edit/{id}(id=${nhanVien.id})}"
+      method="post"
+      th:object="${nhanVien}"
+    >
+      <label>
+        Tên đăng nhập:
+        <input type="text" th:field="*{username}" required /> </label
+      ><br />
+
+      <label>
+        Email:
+        <input type="email" th:field="*{email}" required /> </label
+      ><br />
+
+      <label>
+        SĐT:
+        <input type="text" th:field="*{sdt}" required /> </label
+      ><br />
+
+      <label>
+        Chức vụ:
+        <select th:field="*{chucVu.id}" required>
+          <option value="">-- Chọn chức vụ --</option>
+          <option value="1">ADMIN</option>
+          <option value="2">USER</option>
+        </select> </label
+      ><br />
+
+      <button type="submit">Cập nhật</button>
+    </form>
+
+    <a th:href="@{/admin/nhansu}">← Quay lại danh sách</a>
+  </body>
+</html>

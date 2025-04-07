@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Form Chấm Công</title>
+  </head>
+  <body>
+    <h2
+      th:text="${#fields.hasErrors()} ? 'Sửa chấm công' : 'Thêm chấm công'"
+    ></h2>
+    <form
+      th:action="@{/admin/chamcong/save}"
+      th:object="${chamCong}"
+      method="post"
+    >
+      <input type="hidden" th:field="*{id}" />
+
+      <label>Ngày:</label>
+      <input type="date" th:field="*{ngay}" /><br />
+
+      <label>Giờ vào:</label>
+      <input type="time" th:field="*{gioVao}" /><br />
+
+      <label>Giờ ra:</label>
+      <input type="time" th:field="*{gioRa}" /><br />
+
+      <label>Trễ:</label>
+      <input type="checkbox" th:field="*{tre}" /><br />
+
+      <label>Trạng thái:</label>
+      <input type="text" th:field="*{trangThai}" /><br />
+
+      <button type="submit">Lưu</button>
+      <a th:href="@{/admin/chamcong}">Quay lại</a>
+    </form>
+  </body>
+</html>

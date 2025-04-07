@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Thêm Giờ Làm</title>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <h2>Thêm Giờ Làm</h2>
+
+    <form th:action="@{/admin/giolam/add}" method="post">
+      <label for="gioBatDau">Giờ bắt đầu:</label>
+      <input type="time" id="gioBatDau" name="gioBatDau" required /><br /><br />
+
+      <label for="gioKetThuc">Giờ kết thúc:</label>
+      <input
+        type="time"
+        id="gioKetThuc"
+        name="gioKetThuc"
+        required
+      /><br /><br />
+
+      <label for="nhanVienId">Nhân viên:</label>
+      <select id="nhanVienId" name="nhanVienId" required>
+        <option
+          th:each="nv : ${nhanViens}"
+          th:value="${nv.id}"
+          th:text="${nv.username}"
+        ></option></select
+      ><br /><br />
+
+      <button type="submit">Thêm</button>
+    </form>
+
+    <a th:href="@{/admin/giolam}">Quay lại danh sách</a>
+  </body>
+</html>

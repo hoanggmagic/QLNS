@@ -1,6 +1,6 @@
 package com.qlns.qlns.repositorys;
 
-import com.qlns.qlns.Mode.NhanVien;
+import com.qlns.qlns.entitys.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

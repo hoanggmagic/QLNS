@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Trang Quản Trị Admin - Giờ Làm Việc</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f9;
+        margin: 0;
+        padding: 0;
+      }
+
+      .admin-header {
+        background-color: #2c3e50;
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+      }
+
+      .container {
+        padding: 20px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 30px;
+      }
+
+      table,
+      th,
+      td {
+        border: 1px solid #ddd;
+      }
+
+      th,
+      td {
+        padding: 10px;
+        text-align: center;
+      }
+
+      th {
+        background-color: #2c3e50;
+        color: white;
+      }
+
+      .btn {
+        padding: 8px 12px;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+      }
+
+      .btn-add {
+        background-color: #27ae60;
+      }
+
+      .btn-edit {
+        background-color: #f39c12;
+      }
+
+      .btn-delete {
+        background-color: #e74c3c;
+      }
+
+      .btn:hover {
+        opacity: 0.8;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="admin-header">
+      <h1>Bảng Điều Khiển Admin</h1>
+    </div>
+
+    <div class="container">
+      <h2 class="text-center mb-4">Danh Sách Giờ Làm Việc</h2>
+
+      <a href="/admin/giolam/add" class="btn btn-add">Thêm Giờ Làm Việc</a>
+
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>ID Nhân Viên</th>
+            <th>Giờ Làm</th>
+            <th>Hành Động</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="gioLam : ${gioLams}">
+            <td th:text="${gioLam.id}">1</td>
+            <td
+              th:text="${gioLam.nhanVien != null ? gioLam.nhanVien.id : '---'}"
+            >
+              NV001
+            </td>
+            <td
+              th:text="${#temporals.format(gioLam.gioBatDau, 'HH:mm') + ' - ' + #temporals.format(gioLam.gioKetThuc, 'HH:mm')}"
+            >
+              08:00 - 17:00
+            </td>
+            <td>
+              <a
+                th:href="@{/admin/giolam/edit(id=${gioLam.id})}"
+                class="btn btn-edit"
+                >Chỉnh Sửa</a
+              >
+              <a
+                th:href="@{/admin/giolam/delete(id=${gioLam.id})}"
+                class="btn btn-delete"
+                onclick="return confirm('Bạn có chắc chắn muốn xóa giờ làm việc này?')"
+                >Xóa</a
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

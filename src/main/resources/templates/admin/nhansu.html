@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản Trị - Danh Sách Nhân Viên</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f9;
+        margin: 0;
+        padding: 0;
+      }
+
+      .admin-header {
+        background-color: #2c3e50;
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+        position: relative;
+      }
+
+      .logout-btn {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+
+      .logout-btn:hover {
+        background-color: #c0392b;
+      }
+
+      .container {
+        padding: 30px;
+      }
+
+      .add-btn {
+        background-color: #2ecc71;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        text-decoration: none;
+        margin-bottom: 20px;
+        display: inline-block;
+      }
+
+      .add-btn:hover {
+        background-color: #27ae60;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+      }
+
+      table,
+      th,
+      td {
+        border: 1px solid #ddd;
+      }
+
+      th,
+      td {
+        padding: 10px;
+        text-align: center;
+      }
+
+      th {
+        background-color: #2c3e50;
+        color: white;
+      }
+
+      .btn-warning {
+        background-color: #f1c40f;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        text-decoration: none;
+      }
+
+      .btn-danger {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        text-decoration: none;
+      }
+
+      .btn-warning:hover {
+        background-color: #d4ac0d;
+      }
+
+      .btn-danger:hover {
+        background-color: #c0392b;
+      }
+
+      .error {
+        color: red;
+        text-align: center;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="admin-header">
+      <h1>Quản Trị Nhân Sự</h1>
+      <button class="logout-btn" onclick="logout()">Đăng xuất</button>
+    </div>
+
+    <div class="container">
+      <h2>Danh Sách Nhân Viên</h2>
+
+      <a href="/admin/nhansu/add" class="add-btn">➕ Thêm Nhân Viên</a>
+
+      <!-- Hiển thị lỗi nếu có -->
+      <div th:if="${error != null}" class="error">
+        <p th:text="${error}"></p>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>ID</th>
+            <th>Tên Đăng Nhập</th>
+            <th>Email</th>
+            <th>SĐT</th>
+            <th>Chức Vụ</th>
+            <th>Hành Động</th>
+          </tr>
+        </thead>
+        <tbody
+          th:if="${nhanViens != null and #lists.isEmpty(nhanViens) == false}"
+        >
+          <tr th:each="nhanVien, iterStat : ${nhanViens}">
+            <td th:text="${iterStat.index + 1}">1</td>
+            <td th:text="${nhanVien.id}">NV001</td>
+            <td th:text="${nhanVien.username}">admin</td>
+            <td th:text="${nhanVien.email}">admin@gmail.com</td>
+            <td th:text="${nhanVien.sdt}">0123456789</td>
+            <td
+              th:text="${nhanVien.chucVu != null ? nhanVien.chucVu.name : 'Chưa phân quyền'}"
+            >
+              Chưa phân quyền
+            </td>
+            <td>
+              <a
+                th:href="@{/admin/nhansu/edit/{id}(id=${nhanVien.id})}"
+                class="btn-warning"
+              >
+                Chỉnh sửa
+              </a>
+              <a
+                th:href="@{/admin/nhansu/delete/{id}(id=${nhanVien.id})}"
+                class="btn-danger"
+                onclick="return confirm('Bạn có chắc chắn muốn xóa nhân viên này?')"
+              >
+                Xóa
+              </a>
+            </td>
+          </tr>
+        </tbody>
+        <tbody th:if="${nhanViens == null or #lists.isEmpty(nhanViens)}">
+          <tr>
+            <td colspan="7">Không có nhân viên nào.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      function logout() {
+        if (confirm("Bạn có chắc chắn muốn đăng xuất?")) {
+          window.location.href = "/logout";
+        }
+      }
+    </script>
+  </body>
+</html>
