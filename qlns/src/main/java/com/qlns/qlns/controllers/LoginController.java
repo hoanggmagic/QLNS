@@ -1,4 +1,4 @@
-package com.qlns.qlns.controllers.users;
+package com.qlns.qlns.controllers;
 
 import com.qlns.qlns.entitys.*;
 import com.qlns.qlns.services.*;
