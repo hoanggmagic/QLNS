@@ -9,20 +9,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/login")
 public class LoginController {
 
     @Autowired
     private LoginService loginService;
 
     // 👉 Hiển thị trang đăng nhập
-    @GetMapping
+    @GetMapping("/login")
     public String loginPage() {
         return "login";
     }
 
     // 👉 Xử lý đăng nhập
-    @PostMapping
+    @PostMapping("/login/form")
     public String login(@RequestParam("username") String username,
             @RequestParam("password") String password,
             Model model,
