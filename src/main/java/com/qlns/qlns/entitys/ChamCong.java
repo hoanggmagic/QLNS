@@ -1,9 +1,18 @@
 package com.qlns.qlns.entitys;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.Date;
 
 @Entity
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "cham_cong")
 public class ChamCong {
 
@@ -32,60 +41,4 @@ public class ChamCong {
     @JoinColumn(name = "nhanvien_id")
     private NhanVien nhanVien;
 
-    // Getters and Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Date getNgay() {
-        return ngay;
-    }
-
-    public void setNgay(Date ngay) {
-        this.ngay = ngay;
-    }
-
-    public Date getGioVao() {
-        return gioVao;
-    }
-
-    public void setGioVao(Date gioVao) {
-        this.gioVao = gioVao;
-    }
-
-    public Date getGioRa() {
-        return gioRa;
-    }
-
-    public void setGioRa(Date gioRa) {
-        this.gioRa = gioRa;
-    }
-
-    public Boolean getTre() {
-        return tre;
-    }
-
-    public void setTre(Boolean tre) {
-        this.tre = tre;
-    }
-
-    public String getTrangThai() {
-        return trangThai;
-    }
-
-    public void setTrangThai(String trangThai) {
-        this.trangThai = trangThai;
-    }
-
-    public NhanVien getNhanVien() {
-        return nhanVien;
-    }
-
-    public void setNhanVien(NhanVien nhanVien) {
-        this.nhanVien = nhanVien;
-    }
 }

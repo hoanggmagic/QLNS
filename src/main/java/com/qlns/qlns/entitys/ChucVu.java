@@ -5,9 +5,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import lombok.*;
+
 import java.util.List;
 
 @Entity
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ChucVu {
 
     @Id
@@ -16,31 +22,6 @@ public class ChucVu {
 
     private String name;
 
-    @OneToMany(mappedBy = "chucVu") // mappedBy trỏ đến thuộc tính 'chucVu' trong NhanVien
+    @OneToMany(mappedBy = "chucVu")
     private List<NhanVien> nhanViens;
-
-    // Getters and setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<NhanVien> getNhanViens() {
-        return nhanViens;
-    }
-
-    public void setNhanViens(List<NhanVien> nhanViens) {
-        this.nhanViens = nhanViens;
-    }
 }

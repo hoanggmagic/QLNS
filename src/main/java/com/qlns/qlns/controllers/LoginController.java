@@ -16,10 +16,10 @@ public class LoginController {
 
     @GetMapping("/")
     public String loginPage() {
-        return "/views/login";
+        return "views/login";
     }
 
-    @PostMapping("/login/form")
+    @PostMapping("login/form")
     public String login(@RequestParam("username") String username,
             @RequestParam("password") String password,
             Model model,
@@ -29,7 +29,7 @@ public class LoginController {
 
         if (nhanVien == null) {
             model.addAttribute("error", "Sai tên đăng nhập hoặc mật khẩu.");
-            return "redirect:/";
+            return "views/login";
         }
 
         // ✅ Lưu thông tin nhân viên vào session
@@ -46,7 +46,7 @@ public class LoginController {
     }
 
     // 👉 Xử lý đăng xuất
-    @GetMapping("/logout")
+    @GetMapping("logout")
     public String logout(HttpSession session) {
         session.invalidate(); // xoá session
         return "redirect:/";

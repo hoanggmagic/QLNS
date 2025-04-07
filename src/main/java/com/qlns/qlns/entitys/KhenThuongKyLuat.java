@@ -1,9 +1,15 @@
 package com.qlns.qlns.entitys;
 
 import jakarta.persistence.*;
+import lombok.*;
+
 import java.util.Date;
 
 @Entity
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "KhenThuongKyLuat")
 public class KhenThuongKyLuat {
 
@@ -11,7 +17,7 @@ public class KhenThuongKyLuat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String loai; // "Khen thưởng" hoặc "Kỷ luật"
+    private String loai;
     private String lyDo;
     private Date ngay;
 
@@ -19,5 +25,4 @@ public class KhenThuongKyLuat {
     @JoinColumn(name = "nhanvien_id")
     private NhanVien nhanVien;
 
-    // Getters, Setters, Constructors
 }
